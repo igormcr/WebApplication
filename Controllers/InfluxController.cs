@@ -1,30 +1,11 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System;
 using System.Net.Http;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Http;
 using LocaWebAPI.Models;
-using System.Xml.Serialization;
-using InfluxDB;
-using InfluxDB.LineProtocol.Payload;
-using System.Diagnostics;
-using InfluxDB.Collector;
-using InfluxDB.LineProtocol.Client;
-using System.Threading.Tasks;
-using InfluxDB.Collector.Pipeline;
-using System.ComponentModel.DataAnnotations.Schema;
-using System;
 using InfluxDB.Client;
 using InfluxDB.Client.Api.Domain;
 using InfluxDB.Client.Core;
-using InfluxDB.Client.Writes;
 using Task = System.Threading.Tasks.Task;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 using System.Windows.Forms;
 
 namespace WebApplication2.Controllers
@@ -97,7 +78,7 @@ namespace WebApplication2.Controllers
 
 
 
-                    writeApi.Dispose();
+                    //writeApi.Dispose();
                 }
 
                 //
