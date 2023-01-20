@@ -48,7 +48,7 @@ namespace WebApplication2.Controllers
         {
             Random rand = new Random();
             double min = 1;
-            double max = 100;
+            double max = 1000;
             double range = max - min;
             double sample = rand.NextDouble();
             double scaled = (sample * range) + min;
@@ -65,9 +65,9 @@ namespace WebApplication2.Controllers
             //
             // Write Data
             //
-            for (int i = 0; i < 100000000000; i++)
+            for (int i = 0; i < 1000000; i++)
             {
-                int a = 4000;
+                int a = 3800;
                 wait(a);
                 using (var writeApi = client.GetWriteApi())
                 {
@@ -99,28 +99,6 @@ namespace WebApplication2.Controllers
 
                     writeApi.Dispose();
                 }
-
-
-                int b =4000;
-                wait(a);
-
-
-                var point2 = InfluxDB.Client.Writes.PointData.Measurement("Machine")
-                .Tag("Machine_id", "EPREG0242")
-                        .Field("temperature", f)
-                        .Field("usage", f2)
-                        .Field("fanspeed", f)
-                        .Field("gauge", f2)
-                        .Field("test1", f)
-                        .Field("test2", f2)
-                .Timestamp(DateTime.UtcNow.AddSeconds(-10), WritePrecision.Ns);
-
-                var write = client.GetWriteApi();
-
-
-                write.WritePoint(point2, "db_influx_test", "ec19deabee672945");
-
-                write.Dispose();
 
                 //
                 // Query data
