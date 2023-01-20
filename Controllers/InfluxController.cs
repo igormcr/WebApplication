@@ -48,7 +48,7 @@ namespace WebApplication2.Controllers
         {
             Random rand = new Random();
             double min = 1;
-            double max = 1000;
+            double max = 100;
             double range = max - min;
             double sample = rand.NextDouble();
             double scaled = (sample * range) + min;
