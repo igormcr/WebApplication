@@ -7,6 +7,7 @@ using InfluxDB.Client.Api.Domain;
 using InfluxDB.Client.Core;
 using Task = System.Threading.Tasks.Task;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace WebApplication2.Controllers
 {
@@ -18,7 +19,7 @@ namespace WebApplication2.Controllers
         {
             InfluxModel.DataHistoryEntry obj = new InfluxModel.DataHistoryEntry();
             HttpResponseMessage httpResponseMe = new HttpResponseMessage();
-            Main();
+            WritePointsInflux();
             return View();
         }
 
@@ -26,14 +27,14 @@ namespace WebApplication2.Controllers
 
         public static async Task Main()
         {
-            var client = new InfluxDBClient("http://192.168.15.115:8086","adminIg","dm123456");
+            var client = new InfluxDBClient("http://192.168.15.115:8086", "HlFomVb-ps9_xv7dLv0dPjQdOiJM_xd-MfyCqyeghsGnWT70NDQttq_BfN8ihftsyJUIn6XfylQcj9YjUBXgjA==");
 
             //
             // Write Data
             //
             for (int i = 0; i < 1000000; i++)
             {
-                int a = 3800;
+                int a =0;
                 wait(a);
                 using (var writeApi = client.GetWriteApi())
                 {
@@ -106,6 +107,68 @@ namespace WebApplication2.Controllers
                 //    });
 
                 //});
+            }
+        }
+
+        public static async Task WritePointsInflux()
+        {
+            var client = new InfluxDBClient("http://192.168.15.115:8086", "adminIg", "dm123456");
+
+            //
+            // Write Data
+            //
+            for (int i = 0; i < 1000000; i++)
+            {
+                int a = 0;
+                wait(a);
+                using (var writeApi = client.GetWriteApi())
+                {
+                    //
+                    // Write by Point
+                    //
+                    float f = GenerateRandom();
+                    wait(60);
+                    float f2 = GenerateRandom();
+                    wait(60);
+                    float f3 = GenerateRandom();
+                    wait(60);
+                    float f4 = GenerateRandom();
+                    wait(60);
+                    float f5 = GenerateRandom();
+                    wait(60);
+                    float f6 = GenerateRandom();
+
+
+
+                    List<InfluxDB.Client.Writes.PointData> points = new List<InfluxDB.Client.Writes.PointData>(0);
+
+                    for (int i2 = 0; i2 < 100; i2++)
+                    {
+
+                        var point = InfluxDB.Client.Writes.PointData.Measurement("Machine")
+                        .Tag("Machine_id", "EPREG0242")
+                        .Field("temperature", f)
+                        .Field("usage", f2)
+                        .Field("fanspeed", f3)
+                        .Field("gauge", f4)
+                        .Field("test1", f5)
+                        .Field("test2", f6)
+                        .Timestamp(DateTime.UtcNow.AddSeconds(-10), WritePrecision.Ns);
+
+                        points.Add(point);
+                    }
+                    writeApi.WritePoints(points, "db_influx_test", "ec19deabee672945");
+
+                    var clienttest2 = client.PingAsync();
+                    //Console.WriteLine(clienttest2.Result);
+                    //if (clienttest2.Result == true) {
+                    //    Console.WriteLine("Response ok");
+                    //}
+                    //else { wait(600); }
+
+                    writeApi.Dispose();
+                }
+
             }
         }
 
