@@ -142,8 +142,10 @@ namespace WebApplication2.Controllers
 
                     List<InfluxDB.Client.Writes.PointData> points = new List<InfluxDB.Client.Writes.PointData>(0);
 
-                    for (int i2 = 0; i2 < 100; i2++)
+                    for (int i2 = 0; i2 < 1000; i2++)
                     {
+                        Random r = new Random();
+                        int rInt = r.Next(0,6000);
 
                         var point = InfluxDB.Client.Writes.PointData.Measurement("Machine")
                         .Tag("Machine_id", "EPREG0242")
@@ -153,7 +155,7 @@ namespace WebApplication2.Controllers
                         .Field("gauge", f4)
                         .Field("test1", f5)
                         .Field("test2", f6)
-                        .Timestamp(DateTime.UtcNow.AddSeconds(-10), WritePrecision.Ns);
+                        .Timestamp(DateTime.UtcNow.AddSeconds(-rInt), WritePrecision.Ns);
 
                         points.Add(point);
                     }
