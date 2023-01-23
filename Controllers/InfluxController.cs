@@ -19,7 +19,6 @@ namespace WebApplication2.Controllers
             InfluxModel.DataHistoryEntry obj = new InfluxModel.DataHistoryEntry();
             HttpResponseMessage httpResponseMe = new HttpResponseMessage();
             Main();
-            //ChamadaPost(obj);
             return View();
         }
 
@@ -27,20 +26,6 @@ namespace WebApplication2.Controllers
 
         public static async Task Main()
         {
-            Random rand = new Random();
-            double min = 1;
-            double max = 100;
-            double range = max - min;
-            double sample = rand.NextDouble();
-            double scaled = (sample * range) + min;
-            float f = (float)scaled;
-
-
-
-            double sample2 = rand.NextDouble();
-            double scaled2 = (sample2 * range) + min;
-            float f2 = (float)scaled2;
-
             var client = new InfluxDBClient("http://192.168.15.115:8086","adminIg","dm123456");
 
             //
@@ -55,14 +40,28 @@ namespace WebApplication2.Controllers
                     //
                     // Write by Point
                     //
+                    float f = GenerateRandom();
+                    wait(60);
+                    float f2 = GenerateRandom();
+                    wait(60);
+                    float f3 =GenerateRandom();
+                    wait(60);
+                    float f4 = GenerateRandom();
+                    wait(60);
+                    float f5 = GenerateRandom();
+                    wait(60);
+                    float f6 = GenerateRandom();
+
+
+
                     var point = InfluxDB.Client.Writes.PointData.Measurement("Machine")
                         .Tag("Machine_id", "EPREG0242")
                         .Field("temperature", f)
                         .Field("usage", f2)
-                        .Field("fanspeed", f)
-                        .Field("gauge", f2)
-                        .Field("test1", f)
-                        .Field("test2", f2)
+                        .Field("fanspeed", f3)
+                        .Field("gauge", f4)
+                        .Field("test1", f5)
+                        .Field("test2", f6)
                         .Timestamp(DateTime.UtcNow.AddSeconds(-10), WritePrecision.Ns);
                     writeApi.WritePoint(point, "db_influx_test", "ec19deabee672945");
                     //
@@ -76,14 +75,24 @@ namespace WebApplication2.Controllers
                     //var machine = new Machine { machine_id = 50, Usage = 70, Time = DateTime.UtcNow };
                     //writeApi.WriteMeasurement(machine, WritePrecision.Ns, "db_influx_test", "ec19deabee672945");
 
+                    var clienttest2 = client.PingAsync();
+                    //Console.WriteLine(clienttest2.Result);
+                    //if (clienttest2.Result == true) {
+                    //    Console.WriteLine("Response ok");
+                    //}
+                    //else { wait(600); }
 
-
-                    //writeApi.Dispose();
+                    writeApi.Dispose();
                 }
 
-                //
-                // Query data
-                //
+                //if (clienttest.Result == true)
+                //{
+                //    Console.Write("Response ok");
+                //}
+                //else { wait(600); Main(); }
+                //Query data;
+
+
                 //var queryapi = client.GetQueryApi();
                 //var flux = "from(bucket:\"db_influx_test\") |> range(start: 0)";
 
@@ -121,6 +130,20 @@ namespace WebApplication2.Controllers
             {
                 Application.DoEvents();
             }
+        }
+
+        private static float GenerateRandom()
+        {
+
+            var rand = new Random();
+            double min = 1;
+            double max = 100;
+            double range = max - min;
+
+            double sample2 = rand.NextDouble();
+            double scaled2 = (sample2 * range) + min;
+            return (float)scaled2;
+
         }
 
         [Measurement("Machine")]
