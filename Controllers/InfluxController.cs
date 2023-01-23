@@ -112,7 +112,7 @@ namespace WebApplication2.Controllers
 
         public static async Task WritePointsInflux()
         {
-            var client = new InfluxDBClient("http://192.168.15.115:8086", "adminIg", "dm123456");
+            var client = new InfluxDBClient("http://192.168.15.115:8086", "HlFomVb-ps9_xv7dLv0dPjQdOiJM_xd-MfyCqyeghsGnWT70NDQttq_BfN8ihftsyJUIn6XfylQcj9YjUBXgjA==");
 
             //
             // Write Data
