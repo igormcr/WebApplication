@@ -126,38 +126,48 @@ namespace WebApplication2.Controllers
                     //
                     // Write by Point
                     //
-                    float f = GenerateRandom();
-                    wait(60);
-                    float f2 = GenerateRandom();
-                    wait(60);
-                    float f3 = GenerateRandom();
-                    wait(60);
-                    float f4 = GenerateRandom();
-                    wait(60);
-                    float f5 = GenerateRandom();
-                    wait(60);
-                    float f6 = GenerateRandom();
-
-
-
                     List<InfluxDB.Client.Writes.PointData> points = new List<InfluxDB.Client.Writes.PointData>(0);
 
-                    for (int i2 = 0; i2 < 1000; i2++)
+                    for (int i2 = 0; i2 < 50; i2++)
                     {
                         Random r = new Random();
-                        int rInt = r.Next(0,6000);
+                        int rInt = r.Next(0,60000);
 
                         var point = InfluxDB.Client.Writes.PointData.Measurement("Machine")
                         .Tag("Machine_id", "EPREG0242")
-                        .Field("temperature", f)
-                        .Field("usage", f2)
-                        .Field("fanspeed", f3)
-                        .Field("gauge", f4)
-                        .Field("test1", f5)
-                        .Field("test2", f6)
-                        .Timestamp(DateTime.UtcNow.AddSeconds(-rInt), WritePrecision.Ns);
+                        .Field("temperature", GenerateRandom())
+                        .Field("usage", GenerateRandom())
+                        .Field("fanspeed", GenerateRandom())
+                        .Field("gauge", GenerateRandom())
+                        .Field("test1", GenerateRandom())
+                        .Field("test2", GenerateRandom())
+                        .Timestamp(DateTime.UtcNow.AddSeconds(rInt), WritePrecision.Ns);
 
                         points.Add(point);
+
+                        var point2 = InfluxDB.Client.Writes.PointData.Measurement("Machine")
+                        .Tag("Machine_id", "EPREG0242")
+                        .Field("temperature", GenerateRandom())
+                        .Field("usage", GenerateRandom())
+                        .Field("fanspeed", GenerateRandom())
+                        .Field("gauge", GenerateRandom())
+                        .Field("test1", GenerateRandom())
+                        .Field("test2", GenerateRandom())
+                        .Timestamp(DateTime.UtcNow.AddSeconds(0), WritePrecision.Ns);
+
+                        points.Add(point2);
+
+                        var point3 = InfluxDB.Client.Writes.PointData.Measurement("Machine")
+                        .Tag("Machine_id", "EPREG" + rInt.ToString())
+                        .Field("temperature", GenerateRandom())
+                        .Field("usage", GenerateRandom())
+                        .Field("fanspeed", GenerateRandom())
+                        .Field("gauge", GenerateRandom())
+                        .Field("test1", GenerateRandom())
+                        .Field("test2", GenerateRandom())
+                        .Timestamp(DateTime.UtcNow.AddSeconds(0), WritePrecision.Ns);
+
+                        points.Add(point3);
                     }
                     writeApi.WritePoints(points, "db_influx_test", "ec19deabee672945");
 
@@ -199,6 +209,8 @@ namespace WebApplication2.Controllers
 
         private static float GenerateRandom()
         {
+            Random r = new Random();
+            int rInt = r.Next(0, 50);
 
             var rand = new Random();
             double min = 1;
@@ -207,7 +219,7 @@ namespace WebApplication2.Controllers
 
             double sample2 = rand.NextDouble();
             double scaled2 = (sample2 * range) + min;
-            return (float)scaled2;
+            return (float)scaled2 + rInt;
 
         }
 
