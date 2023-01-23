@@ -131,7 +131,7 @@ namespace WebApplication2.Controllers
                     for (int i2 = 0; i2 < 50; i2++)
                     {
                         Random r = new Random();
-                        int rInt = r.Next(0,60000);
+                        int rInt = r.Next(0,20);
 
                         var point = InfluxDB.Client.Writes.PointData.Measurement("Machine")
                         .Tag("Machine_id", "EPREG0242")
@@ -146,7 +146,7 @@ namespace WebApplication2.Controllers
                         points.Add(point);
 
                         var point2 = InfluxDB.Client.Writes.PointData.Measurement("Machine")
-                        .Tag("Machine_id", "EPREG0242")
+                        .Tag("Machine_id", "EPREG0202" + rInt.ToString())
                         .Field("temperature", GenerateRandom())
                         .Field("usage", GenerateRandom())
                         .Field("fanspeed", GenerateRandom())
@@ -158,7 +158,7 @@ namespace WebApplication2.Controllers
                         points.Add(point2);
 
                         var point3 = InfluxDB.Client.Writes.PointData.Measurement("Machine")
-                        .Tag("Machine_id", "EPREG" + rInt.ToString())
+                        .Tag("Machine_id", "EPREG0101" + rInt.ToString())
                         .Field("temperature", GenerateRandom())
                         .Field("usage", GenerateRandom())
                         .Field("fanspeed", GenerateRandom())
