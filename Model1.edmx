@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Teste1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Teste1.dbo.LogDataStatusHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="LogDataStatusHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="PeriodStart" />
+            <PropertyRef Name="PeriodEnd" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="99" Nullable="false" />
+          <Property Name="StopPlayPause" Type="int" />
+          <Property Name="OperationType" Type="int" />
+          <Property Name="OperationStatus" Type="int" />
+          <Property Name="OperationMode" Type="int" />
+          <Property Name="StateCondition" Type="int" />
+          <Property Name="PeriodStart" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="PeriodEnd" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Teste1.dbo.YardMachineMaterial' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="YardMachineMaterial">
+          <Key>
+            <PropertyRef Name="Datetime" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Datetime" Type="datetime" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Flow" Type="float" />
+          <Property Name="FlowSetpoint" Type="float" />
+          <Property Name="Pressure" Type="float" />
+          <Property Name="PressureSetpoint" Type="float" />
+          <Property Name="OverloadValue" Type="float" />
+          <Property Name="OperationStatus" Type="int" />
+          <Property Name="OperationType" Type="int" />
+          <Property Name="OperationMode" Type="int" />
+        </EntityType>
+        <EntityContainer Name="Teste1ModelStoreContainer">
+          <EntitySet Name="LogDataStatusHistory" EntityType="Self.LogDataStatusHistory" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [LogDataStatusHistory].[Id] AS [Id], 
+    [LogDataStatusHistory].[Name] AS [Name], 
+    [LogDataStatusHistory].[StopPlayPause] AS [StopPlayPause], 
+    [LogDataStatusHistory].[OperationType] AS [OperationType], 
+    [LogDataStatusHistory].[OperationStatus] AS [OperationStatus], 
+    [LogDataStatusHistory].[OperationMode] AS [OperationMode], 
+    [LogDataStatusHistory].[StateCondition] AS [StateCondition], 
+    [LogDataStatusHistory].[PeriodStart] AS [PeriodStart], 
+    [LogDataStatusHistory].[PeriodEnd] AS [PeriodEnd]
+    FROM [dbo].[LogDataStatusHistory] AS [LogDataStatusHistory]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="YardMachineMaterial" EntityType="Self.YardMachineMaterial" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [YardMachineMaterial].[Datetime] AS [Datetime], 
+    [YardMachineMaterial].[Name] AS [Name], 
+    [YardMachineMaterial].[Flow] AS [Flow], 
+    [YardMachineMaterial].[FlowSetpoint] AS [FlowSetpoint], 
+    [YardMachineMaterial].[Pressure] AS [Pressure], 
+    [YardMachineMaterial].[PressureSetpoint] AS [PressureSetpoint], 
+    [YardMachineMaterial].[OverloadValue] AS [OverloadValue], 
+    [YardMachineMaterial].[OperationStatus] AS [OperationStatus], 
+    [YardMachineMaterial].[OperationType] AS [OperationType], 
+    [YardMachineMaterial].[OperationMode] AS [OperationMode]
+    FROM [dbo].[YardMachineMaterial] AS [YardMachineMaterial]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Teste1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="LogDataStatusHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="PeriodStart" />
+            <PropertyRef Name="PeriodEnd" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="99" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StopPlayPause" Type="Int32" />
+          <Property Name="OperationType" Type="Int32" />
+          <Property Name="OperationStatus" Type="Int32" />
+          <Property Name="OperationMode" Type="Int32" />
+          <Property Name="StateCondition" Type="Int32" />
+          <Property Name="PeriodStart" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="PeriodEnd" Type="DateTime" Nullable="false" Precision="7" />
+        </EntityType>
+        <EntityType Name="YardMachineMaterial">
+          <Key>
+            <PropertyRef Name="Datetime" />
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Flow" Type="Double" />
+          <Property Name="FlowSetpoint" Type="Double" />
+          <Property Name="Pressure" Type="Double" />
+          <Property Name="PressureSetpoint" Type="Double" />
+          <Property Name="OverloadValue" Type="Double" />
+          <Property Name="OperationStatus" Type="Int32" />
+          <Property Name="OperationType" Type="Int32" />
+          <Property Name="OperationMode" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="Teste1Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LogDataStatusHistory" EntityType="Self.LogDataStatusHistory" />
+          <EntitySet Name="YardMachineMaterial" EntityType="Self.YardMachineMaterial" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Teste1ModelStoreContainer" CdmEntityContainer="Teste1Entities1">
+          <EntitySetMapping Name="LogDataStatusHistory">
+            <EntityTypeMapping TypeName="Teste1Model.LogDataStatusHistory">
+              <MappingFragment StoreEntitySet="LogDataStatusHistory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="StopPlayPause" ColumnName="StopPlayPause" />
+                <ScalarProperty Name="OperationType" ColumnName="OperationType" />
+                <ScalarProperty Name="OperationStatus" ColumnName="OperationStatus" />
+                <ScalarProperty Name="OperationMode" ColumnName="OperationMode" />
+                <ScalarProperty Name="StateCondition" ColumnName="StateCondition" />
+                <ScalarProperty Name="PeriodStart" ColumnName="PeriodStart" />
+                <ScalarProperty Name="PeriodEnd" ColumnName="PeriodEnd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YardMachineMaterial">
+            <EntityTypeMapping TypeName="Teste1Model.YardMachineMaterial">
+              <MappingFragment StoreEntitySet="YardMachineMaterial">
+                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Flow" ColumnName="Flow" />
+                <ScalarProperty Name="FlowSetpoint" ColumnName="FlowSetpoint" />
+                <ScalarProperty Name="Pressure" ColumnName="Pressure" />
+                <ScalarProperty Name="PressureSetpoint" ColumnName="PressureSetpoint" />
+                <ScalarProperty Name="OverloadValue" ColumnName="OverloadValue" />
+                <ScalarProperty Name="OperationStatus" ColumnName="OperationStatus" />
+                <ScalarProperty Name="OperationType" ColumnName="OperationType" />
+                <ScalarProperty Name="OperationMode" ColumnName="OperationMode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
