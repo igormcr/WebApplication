@@ -8,12 +8,14 @@ using InfluxDB.Client.Core;
 using Task = System.Threading.Tasks.Task;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Net;
 
 namespace WebApplication2.Controllers
 {
     public class InfluxController : Controller
     {
 
+        
 
         public ActionResult Index()
         {
@@ -27,11 +29,13 @@ namespace WebApplication2.Controllers
 
         public static async Task Main()
         {
-            var client = new InfluxDBClient("http://192.168.15.115:8086", "HlFomVb-ps9_xv7dLv0dPjQdOiJM_xd-MfyCqyeghsGnWT70NDQttq_BfN8ihftsyJUIn6XfylQcj9YjUBXgjA==");
 
+            var client = new InfluxDBClient("http://192.168.15.115:8086", "HlFomVb-ps9_xv7dLv0dPjQdOiJM_xd-MfyCqyeghsGnWT70NDQttq_BfN8ihftsyJUIn6XfylQcj9YjUBXgjA==");
+             Teste1Entities1 db = new Teste1Entities1();
             //
             // Write Data
             //
+
             for (int i = 0; i < 1000000; i++)
             {
                 int a =0;
