@@ -34,12 +34,22 @@ namespace WebApplication2.Controllers
                     var minusday = i2;
                     for (int i = 0; i < listtotal; i++)
                     {
+                        //if(i2 == 0)
+                        //{
+                        // var point2 = InfluxDB.Client.Writes.PointData.Measurement("Machine")
+                        //.Tag("Name", listyard[i].Name)
+                        //.Field("Flow", listyard[i].Flow)
+                        //.Field("FlowSetpoint", listyard[i].FlowSetpoint)
+                        //.Field("Pressure", listyard[i].Pressure)
+                        //.Field("PressureSetpoint", listyard[i].PressureSetpoint)
+                        //.Field("OverloadValue", listyard[i].OverloadValue)
+                        //.Field("OperationStatus", listyard[i].OperationStatus)
+                        //.Field("OperationType", listyard[i].OperationType)
+                        //.Field("OperationMode", listyard[i].OperationMode)
+                        //.Timestamp(DateTime.UtcNow, WritePrecision.Ns);
 
-
-
-
-                        Random r = new Random();
-                        int rInt = r.Next(0, 20);
+                        //    points.Add(point2);
+                        //}
 
                         var point = InfluxDB.Client.Writes.PointData.Measurement("Machine")
                         .Tag("Name", listyard[i].Name)
@@ -53,11 +63,12 @@ namespace WebApplication2.Controllers
                         .Field("OperationMode", listyard[i].OperationMode)
                         .Timestamp(listyard[i].Datetime.ToUniversalTime().AddDays(-minusday), WritePrecision.Ns);
 
-                        points.Add(point);
+                        writeApi.WritePoint(point, "Teste3", "ec19deabee672945");
+                        //points.Add(point);
                     }
 
-                    writeApi.WritePoints(points, "Teste1", "ec19deabee672945");
-                    points.Clear();
+                    //writeApi.WritePoints(points, "Teste3", "ec19deabee672945");
+                    //points.Clear();
                     //writeApi.Dispose();
                 }
             }
