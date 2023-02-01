@@ -37,6 +37,9 @@
             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:AdventureWorks2019ConnectionString %>" SelectCommand="SELECT * FROM Person.Person"></asp:SqlDataSource>
 
         </div>
+        <asp:GridView ID="GridView3" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource2"></asp:GridView>
+        <asp:SqlDataSource runat="server" ID="SqlDataSource2" ConnectionString="<%$ ConnectionStrings:masterConnectionString %>" SelectCommand="SELECT Name, Flow, FlowSetpoint, Pressure, PressureSetpoint, OverloadValue, OperationStatus, OperationType, OperationMode FROM OPENQUERY (QUESTDB , 'SELECT * FROM [questdb-query-1675076348034.csv] LIMIT 50000') AS derivedtbl_1"></asp:SqlDataSource>
     </form>
+
 </body>
 </html>

@@ -337,6 +337,7 @@
     <Compile Include="Controllers\InfluxController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\QuestDBController.cs" />
+    <Compile Include="Controllers\QuestDBSQLController.cs" />
     <Compile Include="Controllers\YardMachineMaterialsController.cs" />
     <Compile Include="CountryRegion.cs">
       <DependentUpon>AdventureWorks19.tt</DependentUpon>
@@ -477,6 +478,13 @@
     </Compile>
     <Compile Include="PurchaseOrderHeader.cs">
       <DependentUpon>AdventureWorks19.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuestDBSQL.aspx.cs">
+      <DependentUpon>QuestDBSQL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="QuestDBSQL.aspx.designer.cs">
+      <DependentUpon>QuestDBSQL.aspx</DependentUpon>
     </Compile>
     <Compile Include="SalesOrderDetail.cs">
       <DependentUpon>AdventureWorks19.tt</DependentUpon>
@@ -662,6 +670,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="QuestDBSQL.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="AdventureWorks19.edmx">
@@ -720,10 +729,11 @@
     <Content Include="Views\YardMachineMaterials\Details.cshtml" />
     <Content Include="Views\YardMachineMaterials\Edit.cshtml" />
     <Content Include="Views\YardMachineMaterials\Index.cshtml" />
+    <Content Include="Views\QuestDB\Index.cshtml" />
+    <Content Include="Views\QuestDBSQL\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\QuestDB\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
