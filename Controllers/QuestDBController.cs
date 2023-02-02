@@ -13,6 +13,8 @@ using System.Web.Mvc;
 using System.Web.Services.Description;
 using Microsoft.Extensions.Logging;
 using System.Data.Common;
+using System.Collections;
+using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
 {
@@ -22,16 +24,14 @@ namespace WebApplication2.Controllers
         // GET: QuestDB
         public ActionResult Index()
         {
-            object model = new object();
-            model = QuestDBWireProtocolSelect();
-            return View(model);
+            return View(QuestDBWireProtocolSelect());
         }
 
         /// <summary>
         /// funcionou
         /// </summary>
         /// <returns></returns>
-        public object QuestDBWireProtocolSelect()
+        public List<QuestDB_MachineModel> QuestDBWireProtocolSelect()
         {
 
             string username = "admin";
@@ -43,14 +43,33 @@ namespace WebApplication2.Controllers
             var dataSource = NpgsqlDataSource.Create(connectionString);
             object result = null;
 
+            List<QuestDB_MachineModel> listmachine = new List<QuestDB_MachineModel>();
+            QuestDB_MachineModel machine = new QuestDB_MachineModel();
+            //listmachine[0] = new QuestDB_MachineModel();
+            using (var cmd = dataSource.CreateCommand("SELECT * FROM 'questdb-query-1675076348034.csv' LIMIT 100"))
+            using (var reader = cmd.ExecuteReader())
+            {
 
+                while (reader.Read())
+                {
 
-            var cmd = dataSource.CreateCommand("SELECT * FROM 'questdb-query-1675076348034.csv' LIMIT 50");
-            var reader = cmd.ExecuteReader();
-  
+                    machine = new QuestDB_MachineModel();
+                    machine.Datetime = (reader.GetString(0));
+                    machine.PeriodStart = (reader.GetDateTime(1));
+                    machine.Name = (reader.GetString(2));
+                    machine.Flow = (reader.GetDouble(3));
+                    machine.FlowSetpoint = (reader.GetDouble(4));
+                    machine.Pressure = (reader.GetDouble(5));
+                    machine.PressureSetPoint = (reader.GetDouble(6));
+                    machine.OverloadValue = (reader.GetDouble(7));
+                    machine.OperationStatus = (reader.GetDouble(8));
+                    machine.OperationType = (reader.GetDouble(9));
+                    machine.OperationMode = (reader.GetDouble(10));
 
-            return reader;
-            
+                    listmachine.Add(machine);
+                }
+            }
+            return listmachine;
         }
         public Task QuestDBWireProtocolInsert()
         {

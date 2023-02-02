@@ -335,12 +335,11 @@
     <Compile Include="ContactType.cs">
       <DependentUpon>AdventureWorks19.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InfluxController.cs" />
-    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\QuestDBController.cs" />
     <Compile Include="Controllers\QuestDBSQLController.cs" />
+    <Compile Include="Controllers\YardMachineMaterials1Controller.cs" />
     <Compile Include="Controllers\YardMachineMaterialsController.cs" />
     <Compile Include="CountryRegion.cs">
       <DependentUpon>AdventureWorks19.tt</DependentUpon>
@@ -414,6 +413,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\QuestDB_MachineModel.cs" />
     <Compile Include="Models\InfluxModel.cs" />
     <Compile Include="Password.cs">
       <DependentUpon>AdventureWorks19.tt</DependentUpon>
@@ -737,6 +737,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
