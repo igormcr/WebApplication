@@ -1,4 +1,5 @@
-﻿using InfluxDB.Client.Api.Domain;
+﻿using InfluxDB.Client;
+using InfluxDB.Client.Api.Domain;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,90 +14,15 @@ namespace WebApplication2.Controllers
 {
     public class QuestDBSQLController : Controller
     {
+        private Teste1Entities1 db = new Teste1Entities1();
         // GET: QuestDBSQL
         public ActionResult Index()
         {
             object result = TestConnectSQL();
+            CopiaParaQuestDB();
             return View();
         }
 
-
-
-        // GET: QuestDBSQL/Details/5
-        public ActionResult Details(int id)
-        {
-            SqlCommand com = new SqlCommand("SELECT Body FROM Messages WHERE MessageID = @MessageId");
-            com.Parameters.AddWithValue("@MessageId", 1); //Replace 1 with messageid you want to get
-            string s = com.ExecuteScalar().ToString();
-
-            return View();
-        }
-
-        // GET: QuestDBSQL/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: QuestDBSQL/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: QuestDBSQL/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: QuestDBSQL/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: QuestDBSQL/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: QuestDBSQL/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
         public SqlDataReader TestConnectSQL()
         {
             string connStr = "Data Source=.;Initial Catalog=master;Integrated Security=True;";
@@ -118,5 +44,36 @@ namespace WebApplication2.Controllers
 
    
         }
+
+        public ActionResult CopiaParaQuestDB()
+        {
+            string connStr = "Data Source=.;Initial Catalog=master;Integrated Security=True;";
+            var conn = new SqlConnection(connStr);           
+
+            List<YardMachineMaterial> listyard = db.YardMachineMaterial.ToList();
+            List<InfluxDB.Client.Writes.PointData> points = new List<InfluxDB.Client.Writes.PointData>(0);
+            
+            for (int i2 = 0; i2 < 30; i2++)
+            {
+                
+                var listtotal = db.YardMachineMaterial.ToList().Count;
+                var minusday = i2;
+                for (int i = 0; i < listtotal; i++)
+                {
+
+                    object transcriber = new { Name = listyard[i], Flow = listyard[i].Flow };
+
+                    string cmdStr = "SELECT * FROM OPENQUERY(QUESTDB,'SELECT * FROM [questdb-query-1675076348034.csv] LIMIT 50000')";
+
+                    var cmd = new SqlCommand(cmdStr, conn);
+                    using (var writeApi = cmd.ExecuteReader())
+                    {
+                        cmd.ExecuteReader();
+                    }
+                }
+            }
+            return View(db.YardMachineMaterial.ToList());
+        }
+
     }
 }
