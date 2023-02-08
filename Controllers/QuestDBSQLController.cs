@@ -19,7 +19,6 @@ namespace WebApplication2.Controllers
         public ActionResult Index()
         {
             object result = TestConnectSQL();
-            CopiaParaQuestDB();
             return View();
         }
 
@@ -33,7 +32,7 @@ namespace WebApplication2.Controllers
             var conn = new SqlConnection(connStr);
 
             conn.Open();
-            
+
             var cmd = new SqlCommand(cmdStr, conn);
 
             SqlDataReader dr = cmd.ExecuteReader();
@@ -42,20 +41,20 @@ namespace WebApplication2.Controllers
 
             return dr;
 
-   
+
         }
 
-        public ActionResult CopiaParaQuestDB()
+        public ActionResult SelectParaQuestDBviaSQL()
         {
             string connStr = "Data Source=.;Initial Catalog=master;Integrated Security=True;";
-            var conn = new SqlConnection(connStr);           
+            var conn = new SqlConnection(connStr);
 
             List<YardMachineMaterial> listyard = db.YardMachineMaterial.ToList();
             List<InfluxDB.Client.Writes.PointData> points = new List<InfluxDB.Client.Writes.PointData>(0);
-            
+
             for (int i2 = 0; i2 < 30; i2++)
             {
-                
+
                 var listtotal = db.YardMachineMaterial.ToList().Count;
                 var minusday = i2;
                 for (int i = 0; i < listtotal; i++)
@@ -66,6 +65,7 @@ namespace WebApplication2.Controllers
                     string cmdStr = "SELECT * FROM OPENQUERY(QUESTDB,'SELECT * FROM [questdb-query-1675076348034.csv] LIMIT 50000')";
 
                     var cmd = new SqlCommand(cmdStr, conn);
+
                     using (var writeApi = cmd.ExecuteReader())
                     {
                         cmd.ExecuteReader();
@@ -75,5 +75,6 @@ namespace WebApplication2.Controllers
             return View(db.YardMachineMaterial.ToList());
         }
 
+        //}
     }
 }

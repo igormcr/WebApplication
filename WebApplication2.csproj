@@ -389,6 +389,7 @@
     <Compile Include="Illustration.cs">
       <DependentUpon>AdventureWorks19.tt</DependentUpon>
     </Compile>
+    <Compile Include="InfluxMap\EntityConverterMachine.cs" />
     <Compile Include="JobCandidate.cs">
       <DependentUpon>AdventureWorks19.tt</DependentUpon>
     </Compile>
@@ -734,6 +735,8 @@
     <Content Include="Views\YardMachineMaterials\Index.cshtml" />
     <Content Include="Views\QuestDB\Index.cshtml" />
     <Content Include="Views\QuestDBSQL\Index.cshtml" />
+    <Content Include="Views\QuestDBSQL\SelectParaQuestDBviaSQL.cshtml" />
+    <Content Include="Views\QuestDB\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

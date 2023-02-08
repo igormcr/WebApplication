@@ -9,6 +9,16 @@ using Task = System.Threading.Tasks.Task;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
+using Antlr.Runtime.Misc;
+using Newtonsoft.Json.Linq;
+using System.Text;
+using System.Net.Http.Headers;
+using System.Web.Http;
+using Antlr.Runtime;
+using static System.Net.Mime.MediaTypeNames;
+using System.IO;
+using System.Web;
 
 namespace WebApplication2.Controllers
 {
@@ -21,7 +31,8 @@ namespace WebApplication2.Controllers
         {
             InfluxModel.DataHistoryEntry obj = new InfluxModel.DataHistoryEntry();
             HttpResponseMessage httpResponseMe = new HttpResponseMessage();
-            WritePointsInflux();
+
+            QueryInflux();
             return View();
         }
 
@@ -116,7 +127,7 @@ namespace WebApplication2.Controllers
 
         public static async Task WritePointsInflux()
         {
-            var client = new InfluxDBClient("http://192.168.15.115:8086", "HlFomVb-ps9_xv7dLv0dPjQdOiJM_xd-MfyCqyeghsGnWT70NDQttq_BfN8ihftsyJUIn6XfylQcj9YjUBXgjA==");
+            var client = new InfluxDBClient("http://localhost:8086", "HlFomVb-ps9_xv7dLv0dPjQdOiJM_xd-MfyCqyeghsGnWT70NDQttq_BfN8ihftsyJUIn6XfylQcj9YjUBXgjA==");
 
             //
             // Write Data
@@ -187,6 +198,54 @@ namespace WebApplication2.Controllers
 
             }
         }
+        [System.Web.Http.HttpPost]
+        public static async Task<IHttpActionResult> QueryInflux()
+        {
+            var request = WebRequest.Create("http://localhost:8086/query?orgID=ec19deabee672945&database=Teste1");
+            request.Method = "POST";
+           
+
+            HttpClient client = new HttpClient();
+         
+            string queryString = ("from(bucket: \"Teste1\")  |> range(start: -30d, stop: -1d)  |> filter(fn: (r) => r[\"_measurement\"] == \"Machine\")  |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)  |> yield(name: \"mean\")");
+            
+            var queryUrl = "http://localhost:8086/query?orgID=ec19deabee672945&database=Teste1"/* + queryString*/;
+            string text = "";
+            //var response = client.DownloadString(queryUrl);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", "HlFomVb-ps9_xv7dLv0dPjQdOiJM_xd-MfyCqyeghsGnWT70NDQttq_BfN8ihftsyJUIn6XfylQcj9YjUBXgjA==");
+            byte[] bytes = System.Text.Encoding.Default.GetBytes(queryString);
+            string retorno = System.Text.Encoding.UTF8.GetString(bytes);
+            var stringContent = new StringContent(retorno);
+            //var response =  client.PostAsync(queryUrl, stringContent);
+            //var responseString = response.Result.Content.ReadAsStringAsync();
+            var response = await client.PostAsync(queryUrl, stringContent);
+            var contents = await response.Content.ReadAsStringAsync();
+            Task<string> result = response.Content.ReadAsStringAsync();
+            string body = string.Empty;
+            //var reader = new StreamReader(contents);
+
+            //    //Request.Body.Seek(0, SeekOrigin.Begin);
+            //    //body = reader.ReadToEnd();
+            //    body = await reader.ReadToEndAsync();
+
+            var webResponse = request.GetResponse();
+            var response2 = request.GetRequestStream();
+
+            var reader = new StreamReader(response2);
+            var data = reader.ReadToEnd();
+
+            Console.WriteLine(data);
+
+            return null;
+        }
+        //public Task<T> QueryAsync<T>()
+        //{
+        //    var client = InfluxDBClientFactory.Create("http://localhost:8086", Token);
+        //    var query = client.GetQueryApi();
+
+        //    return null;
+        //}
 
         private static void wait(int value)
         {
@@ -207,7 +266,7 @@ namespace WebApplication2.Controllers
 
             while (timer1.Enabled)
             {
-                Application.DoEvents();
+                System.Windows.Forms.Application.DoEvents();
             }
         }
 
